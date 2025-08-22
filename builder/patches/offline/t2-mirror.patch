@@ -5,6 +5,6 @@
  #SigLevel = Optional TrustAll
  #Server = file:///home/custompkgs
 +
-+[t2]
-+SigLevel = Optional TrustAll
-+Server = https://t2-linux.org/archrepo/os/$arch/
++[arch-mact2]
++SigLevel = Never TrustAll
++Server = https://mirror.funami.tech/arch-mact2/os/x86_64
