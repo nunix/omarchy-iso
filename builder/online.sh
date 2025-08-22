@@ -16,8 +16,25 @@ cd $cache_dir
 # We base our ISO on the official arch ISO (releng) config
 cp -r /archiso/configs/releng/* .
 
+# Copy package files to cache directory so we can read them
+cp /builder/packages/* .
+
+# Read packages from omarchy.packages and archinstall.packages
+all_omarchy_packages=()
+for package_file in omarchy.packages archinstall.packages; do
+  if [ -f "$package_file" ]; then
+    echo "Reading $package_file for online build..."
+    while IFS= read -r package; do
+      # Skip empty lines and comments
+      [[ -z "$package" || "$package" =~ ^[[:space:]]*# ]] && continue
+      all_omarchy_packages+=("$package")
+    done <"$package_file"
+  fi
+done
+
 # Add our needed packages to packages.x86_64
 printf '%s\n' "${arch_packages[@]}" >>"packages.x86_64"
+printf '%s\n' "${all_omarchy_packages[@]}" >>"packages.x86_64"
 
 # Retrieve the latest configurator for setting up user and selecting install disk.
 wget -qO "airootfs/root/configurator" \
