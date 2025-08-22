@@ -55,6 +55,9 @@ prepare_offline_mirror() {
     # This assume we've manually built all the AUR packages
     # and made them accessible "online" during the build process:
     (cd $cache_dir/ && git apply /aur-mirror.patch)
+    
+    # Add T2 repository for Apple T2 chip support
+    (cd $cache_dir/ && git apply /builder/patches/offline/t2-mirror.patch)
 
     mkdir -p /tmp/offlinedb
 

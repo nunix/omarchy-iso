@@ -140,3 +140,7 @@ dart
 qt5-remoteobjects
 dust
 starship
+# T2 Linux packages for Apple T2 chip support
+apple-t2-audio-config
+apple-bcm-firmware
+tiny-dfr

@@ -1,0 +1,10 @@
+--- a/pacman.conf
++++ b/pacman.conf
+@@ -98,3 +98,7 @@ Include = /etc/pacman.d/mirrorlist
+ #[custom]
+ #SigLevel = Optional TrustAll
+ #Server = file:///home/custompkgs
++
++[t2]
++SigLevel = Optional TrustAll
++Server = https://t2-linux.org/archrepo/os/$arch/
