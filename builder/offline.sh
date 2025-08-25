@@ -107,6 +107,9 @@ curl -fsSL -o "airootfs/root/configurator" \
 # Clone Omarchy itself
 git clone -b dev --single-branch https://github.com/basecamp/omarchy.git "$cache_dir/airootfs/root/omarchy"
 
+# Copy pre-install script
+cp /builder/cmds/pre-install.sh "$cache_dir/airootfs/root/"
+
 # We add in our auto-start applications
 # First we'll check for an active internet connection
 # Then we'll start the omarchy installer
@@ -164,6 +167,12 @@ cat <<-_EOF_ | tee $cache_dir/airootfs/root/.automated_script.sh
 	    mkdir -p /mnt/etc/sudoers.d && \
 	    cp /etc/sudoers.d/99-omarchy-installer /mnt/etc/sudoers.d/ && \
 	    echo "\$OMARCHY_USER ALL=(ALL:ALL) NOPASSWD: ALL" >> /mnt/etc/sudoers.d/99-omarchy-installer && \
+	    
+	    # Copy and run pre-install script
+	    cp /root/pre-install.sh "/mnt/home/\$OMARCHY_USER/" && \
+	    chown 1000:1000 "/mnt/home/\$OMARCHY_USER/pre-install.sh" && \
+	    chmod +x "/mnt/home/\$OMARCHY_USER/pre-install.sh" && \
+	    HOME=/home/\$OMARCHY_USER arch-chroot -u \$OMARCHY_USER /mnt/ /bin/bash -c "bash ~/pre-install.sh" && \
 	    
 	    HOME=/home/\$OMARCHY_USER arch-chroot -u \$OMARCHY_USER /mnt/ /bin/bash -c "source /home/\$OMARCHY_USER/.local/share/omarchy/install.sh"
 	fi
