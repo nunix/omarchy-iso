@@ -33,6 +33,7 @@ rm -rf "airootfs/etc/xdg/reflector"
 
 # Ensure the Omarchy installer launches automatically on boot
 cp /builder/cmds/autostart.sh airootfs/root/.automated_script.sh
+cp /builder/cmds/pre-install.sh airootfs/root/
 
 # Patch the default archiso install files
 for patch in /builder/patches/*.patch; do

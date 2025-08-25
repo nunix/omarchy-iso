@@ -69,6 +69,15 @@ $OMARCHY_USER ALL=(ALL:ALL) NOPASSWD: ALL
 EOF
   chmod 440 /mnt/etc/sudoers.d/99-omarchy-installer
 
+  # Copy pre-install script to user home directory
+  mkdir -p "/mnt/home/$OMARCHY_USER"
+  cp ./pre-install.sh "/mnt/home/$OMARCHY_USER/"
+  chown 1000:1000 "/mnt/home/$OMARCHY_USER/pre-install.sh"
+  chmod +x "/mnt/home/$OMARCHY_USER/pre-install.sh"
+
+  # Run pre-installation script
+  chroot_bash -lc "bash ~/pre-install.sh"
+
   # Run Omarchy web installer
   chroot_bash -lc "curl -fsSL https://omarchy.org/install | bash || bash"
 fi
