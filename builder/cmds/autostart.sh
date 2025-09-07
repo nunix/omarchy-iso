@@ -78,6 +78,6 @@ EOF
   # Run Omarchy web installer
   OMARCHY_INSTALL_URL=$(cat omarchy_installer_url.txt 2>/dev/null || echo "https://omarchy.org/install")
   chroot_bash -lc "sudo pacman --noconfirm -Syu linux-t2 apple-t2-audio-config apple-bcm-firmware t2fanrd tiny-dfr"
-  chroot_bash -lc "sudo sed -i 's/(btrfs/(btrfs apple-bce hid_appletb_kbd/' /etc/mkinitcpio.conf"
+  chroot_bash -lc "sudo sed -i 's/(btrfs/(btrfs hid_appletb_kbd/' /etc/mkinitcpio.conf"
   chroot_bash -lc "curl -fsSL $OMARCHY_INSTALL_URL | bash || bash"
 fi
